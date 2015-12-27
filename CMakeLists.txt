@@ -1,0 +1,30 @@
+cmake_minimum_required (VERSION 2.6)
+project(PROJECT_NAME CXX)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(APPLICATION_INCLUDE_DIR        ${CMAKE_SOURCE_DIR}/app/src)
+set(APPLICATION_SOURCE_DIR         ${CMAKE_SOURCE_DIR}/app/src)
+
+file(GLOB APPLICATION_SOURCES
+    ${APPLICATION_SOURCE_DIR}/*.cpp
+    ${APPLICATION_SOURCE_DIR}/*.cxx
+    ${APPLICATION_SOURCE_DIR}/*.c
+    ${APPLICATION_SOURCE_DIR}/*.cc
+    ${APPLICATION_SOURCE_DIR}/*.hpp
+    ${APPLICATION_SOURCE_DIR}/*.hxx
+    ${APPLICATION_SOURCE_DIR}/*.h
+    ${APPLICATION_SOURCE_DIR}/*.hh
+)
+
+set(APPLICATION_SOURCES_WITHOUT_MAIN ${APPLICATION_SOURCES})
+list(REMOVE_ITEM APPLICATION_SOURCES_WITHOUT_MAIN "${APPLICATION_SOURCE_DIR}/main.cpp")
+
+option(BUILD_APP           "Build application"         ON)
+option(BUILD_TESTS         "Build tests"               OFF)
+
+if(BUILD_APP)
+    add_subdirectory(app)
+endif(BUILD_APP)
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif(BUILD_TESTS)
